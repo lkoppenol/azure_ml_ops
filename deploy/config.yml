@@ -5,13 +5,13 @@ amls:
   name: ''  # Must be valid name for Azure resource
   description: ''
   tags:
-    place: your 
+    place: your
     tags: here
   conda_dependencies:
     - "scikit-learn"
     - "numpy==1.15.4"
+  docker_file:
 iot_hub:
   name:   # Must be valid name for Azure resource. DO NOT USE QUOTES ' AROUND THE NAME, this confuses devops.
   deployment_name: ''
-  edge-condition: '*'
   sku: F1

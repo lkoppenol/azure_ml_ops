@@ -23,4 +23,4 @@ az extension add --name azure-cli-iot-ext
 echo "Deleting old deployment, throw & ignore error if already exists"
 az iot edge deployment delete --deployment-id $config_iot_hub_deployment_name --hub-name $config_iot_hub_name || true
 echo "Creating new deployment"
-az iot edge deployment create --content iot-deployment-configuration.json --deployment-id $config_iot_hub_deployment_name --hub-name $config_iot_hub_name --priority 10 --target-condition "$config_iot_hub_edge_condition"
+az iot edge deployment create --content iot-deployment-configuration.json --deployment-id $config_iot_hub_deployment_name --hub-name $config_iot_hub_name --priority 10 --target-condition '*'
