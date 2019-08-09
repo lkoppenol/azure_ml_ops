@@ -7,7 +7,7 @@ import numpy as np
 
 def init():
     global model
-    model_path = Model.get_model_path('model.pkl')
+    model_path = Model.get_model_path('model')
     # deserialize the model file back into a sklearn model
     model = joblib.load(model_path)
 

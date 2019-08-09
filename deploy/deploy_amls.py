@@ -124,10 +124,10 @@ def deploy_pickled_model(amls_config, workspace):
     """
     model_path = '../model/model.pkl'
 
-    logger.info(f"Deploying model {amls_config['name']}")
+    logger.info(f"Deploying model.")
     model = Model.register(
         model_path=model_path,
-        model_name=amls_config['name'],
+        model_name='model',
         tags=amls_config['tags'],
         description=amls_config['description'],
         workspace=workspace
@@ -170,9 +170,9 @@ def amls_model_to_image(amls_config, workspace, model):
         description=amls_config['description'],
         docker_file=docker_file
     )
-    logger.info(f"Deploying image {amls_config['name']}")
+    logger.info(f"Deploying image.")
     image = Image.create(
-        name=amls_config['name'],
+        name='image',
         # this is the model object
         models=[model],
         image_config=image_config,
