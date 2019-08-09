@@ -14,8 +14,8 @@
 1. Fill out all values in `deploy/config.yml`.  
    Anything that does not exist yet will be automatically created
 2. Deploy resources
-   **Linux** Manually run `deploy/deploy_resource_group.sh`
-   **Windows** Manually run `powershell -ExecutionPolicy ByPass -File .\deploy_resource_group.ps1` 
+   **Linux** Manually run `deploy/deploy_resource_group.sh`  
+   **Windows** Manually run `powershell -ExecutionPolicy ByPass -File .\deploy_resource_group.ps1`  
    This will install az iot extension locally, create a resource group and iot hub as specified in the config.
 
 ### 2.3 Setup iot edge
