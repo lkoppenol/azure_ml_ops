@@ -25,5 +25,5 @@ az extension update --name azure-cli-iot-ext
 # deploy iot hub to configured location
 az login
 az group create --location $config_region --name $config_resource_group --subscription $config_subscription
-az iot hub create --name $config_iot_hub_name --resource-group $config_subscription --location $config_region --subscription $config_subscription --sku $config_iot_hub_sku
+az iot hub create --name $config_iot_hub_name --resource-group $config_resource_group --location $config_region --subscription $config_subscription --sku $config_iot_hub_sku
 # az ml workspace create is called from inside the python script via the python azure SDK!

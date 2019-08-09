@@ -11,9 +11,11 @@
 - have linux edge device (for now)
 
 ### 2.2 Setup resource group
-1. Edit config file.  
+1. Fill out all values in `deploy/config.yml`.  
    Anything that does not exist yet will be automatically created
-2. Manually run `deploy/deploy_resource_group.sh`  
+2. Deploy resources
+   **Linux** Manually run `deploy/deploy_resource_group.sh`
+   **Windows** Manually run `powershell -ExecutionPolicy ByPass -File .\deploy_resource_group.ps1` 
    This will install az iot extension locally, create a resource group and iot hub as specified in the config.
 
 ### 2.3 Setup iot edge
@@ -35,8 +37,8 @@
 2. Clone the repo to your devops environment  
    Go to `repos` > `<current repository>` > `import repository`.
    Enter `git` / `<url to this repo>` > `<your repo name>`.
-3. Check automatic generation of build pipeline  
-   Go to > `pipelines` > `build` and ensure that there is a pipeline there for this repo
+3. Generate build pipeline  
+   `pipelines` > `build` > `new` > `azure repos git` > `your repo` > `run`
 4. Create service principal  
    Go to `project settings` > `service connections` > `new service connection` > `azure resource manager` and select the
    subscription and resource group that you specified in the config file
@@ -47,9 +49,10 @@
     3. add 2 tasks;
         1. Use python 3.7
         2. Azure CLI.        
-            Set service principal (4) as subscription.
-            Browse to repo/deploy.sh.
-            Select Access service principal details in script
+            Set service principal (4) as subscription.  
+            Browse to repo/deploy.sh.  
+            Select `Access service principal details in script`
+    4. Save
 
 ### 2.5 Test run
 1. Push something to the branch you selected in 2.4 (sub 5.1)
