@@ -157,13 +157,18 @@ def amls_model_to_image(amls_config, workspace, model):
     script = "score.py"
     conda_file = "conda_dependencies.yml"
     save_conda_dependencies(amls_config, conda_file)
+    if amls_config['docker_file']:
+        docker_file = amls_config['docker_file']
+    else:
+        docker_file = None
 
     image_config = ContainerImage.image_configuration(
         runtime="python",
         execution_script=script,
         conda_file=conda_file,
         tags=amls_config['tags'],
-        description=amls_config['description']
+        description=amls_config['description'],
+        docker_file=docker_file
     )
     logger.info(f"Deploying image {amls_config['name']}")
     image = Image.create(
