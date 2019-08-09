@@ -1,8 +1,8 @@
-subscription: ''
+subscription: ''  # Subscription ID
 region: ''
-resource_group: ''
+resource_group: ''  # Existing or to-be-created.
 amls:
-  name: ''
+  name: ''  # Must be valid name for Azure resource
   description: ''
   tags:
     place: your 
@@ -11,7 +11,7 @@ amls:
     - "scikit-learn"
     - "numpy==1.15.4"
 iot_hub:
-  name: ''
+  name: ''  # Must be valid name for Azure resource
   deployment_name: ''
   edge-condition: '*'
   sku: F1
