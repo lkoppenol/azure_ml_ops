@@ -11,7 +11,7 @@ amls:
     - "scikit-learn"
     - "numpy==1.15.4"
 iot_hub:
-  name: ''  # Must be valid name for Azure resource
+  name:   # Must be valid name for Azure resource. DO NOT USE QUOTES ' AROUND THE NAME, this confuses devops.
   deployment_name: ''
   edge-condition: '*'
   sku: F1
