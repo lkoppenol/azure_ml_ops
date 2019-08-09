@@ -1,7 +1,7 @@
 import os
 import json
 
-from azureml.exceptions import WorkspaceException, WebserviceException
+from azureml.exceptions import WorkspaceException, WebserviceException, ProjectSystemException
 from azureml.core import Workspace, Model
 from azureml.core.image import Image, ContainerImage
 from azureml.core.webservice import AciWebservice, Webservice
@@ -101,7 +101,7 @@ def get_or_create_workspace(subscription_id, resource_group, region, name, servi
     try:
         workspace = Workspace.get(name, subscription_id=subscription_id, resource_group=resource_group)
         logger.info(f"AMLS Workspace `{name}` already exists.")
-    except WorkspaceException:
+    except (WorkspaceException, ProjectSystemException):
         logger.info(f"Creating AMLS Workspace {name} in resource group {resource_group}.")
         workspace = Workspace.create(
             name=name,
