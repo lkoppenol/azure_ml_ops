@@ -1,0 +1,17 @@
+subscription: ''
+region: ''
+resource_group: ''
+amls:
+  name: ''
+  description: ''
+  tags:
+    place: your 
+    tags: here
+  conda_dependencies:
+    - "scikit-learn"
+    - "numpy==1.15.4"
+iot_hub:
+  name: ''
+  deployment_name: ''
+  edge-condition: '*'
+  sku: F1
