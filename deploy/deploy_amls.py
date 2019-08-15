@@ -49,7 +49,8 @@ def deploy_image(service_principal_authentication, config):
         config['resource_group'],
         config['region'],
         config['amls']['name'],
-        service_principal_authentication
+        service_principal_authentication,
+        config['amls']['custom_acr']
     )
 
     model = deploy_pickled_model(config['amls'], workspace)
@@ -87,7 +88,7 @@ def write_iot_deployment_configuration(subscription, resource_group, service_pri
         conf_file.write(deployment_configuration)
 
 
-def get_or_create_workspace(subscription_id, resource_group, region, name, service_principal_authentication):
+def get_or_create_workspace(subscription_id, resource_group, region, name, service_principal_authentication, acr=None):
     """
     Retrieves or creates a workspace. Also creates resource group in case it does not exist yet.
 
@@ -96,20 +97,26 @@ def get_or_create_workspace(subscription_id, resource_group, region, name, servi
     :param region:
     :param name:
     :param service_principal_authentication:
+    :param acr: whether to use a custom ACR. If falsy then default ACR is created.
     :return:
     """
+    if not acr:
+        acr = None
+
     try:
         workspace = Workspace.get(name, subscription_id=subscription_id, resource_group=resource_group)
         logger.info(f"AMLS Workspace `{name}` already exists.")
     except (WorkspaceException, ProjectSystemException):
         logger.info(f"Creating AMLS Workspace {name} in resource group {resource_group}.")
+
         workspace = Workspace.create(
             name=name,
             subscription_id=subscription_id,
             resource_group=resource_group,
             create_resource_group=True,
             location=region,
-            auth=service_principal_authentication
+            auth=service_principal_authentication,
+            container_registry=acr
         )
     return workspace
 

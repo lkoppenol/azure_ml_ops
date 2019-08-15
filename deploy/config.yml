@@ -4,6 +4,7 @@ resource_group: ''  # Existing or to-be-created.
 amls:
   name: ''  # Must be valid name for Azure resource
   description: ''
+  custom_acr: ''
   tags:
     place: your
     tags: here
@@ -12,6 +13,6 @@ amls:
     - "numpy==1.15.4"
   docker_file:
 iot_hub:
-  name:   # Must be valid name for Azure resource. DO NOT USE QUOTES ' AROUND THE NAME, this confuses devops.
+  name: 
   deployment_name: ''
   sku: F1
