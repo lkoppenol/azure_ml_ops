@@ -1,7 +1,7 @@
 # MLOps for IoT Edge
 
 ## 1. Introduction
-
+![overview](docs/img/overview.jpg)
 
 ## 2. Setup
 ### 2.1 Prerequisites
