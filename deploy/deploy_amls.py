@@ -10,6 +10,7 @@ from azure.mgmt.containerregistry import ContainerRegistryManagementClient
 from azureml.core.conda_dependencies import CondaDependencies
 from loguru import logger
 import yaml
+from jinja2 import Template
 
 
 def main():
@@ -241,96 +242,24 @@ def _get_acr_username_password(subscription, resource_group, acr_name, service_p
     return credentials.username, credentials.passwords[password_id].value
 
 
-def get_deployment_configuration(image_name, image_url, acr_url, acr_username, acr_password, as_json=True):
-    deployment_configuration = _get_deployment_configuration(image_name, image_url, acr_url, acr_username, acr_password)
+def get_deployment_configuration(image_name, image_url, acr_url, acr_username, acr_password):
+    deployment_configuration = _get_deployment_configuration(
+        image_name=image_name,
+        image_url=image_url,
+        acr_url=acr_url,
+        acr_username=acr_username,
+        acr_password=acr_password
+    )
 
-    if as_json:
-        return json.dumps(deployment_configuration)
-    else:
-        return deployment_configuration
+    return deployment_configuration
 
 
-def _get_deployment_configuration(image_name, image_url, acr_url, acr_username, acr_password):
-    dict_deployment = {
-      "id": image_name,
-      "content": {
-        "modulesContent": {
-          "$edgeAgent": {
-            "properties.desired": {
-              "modules": {
-                "demoimage": {
-                  "settings": {
-                    "image": str(image_url),
-                    "createOptions": "{\"ExposedPorts\":{\"5001/tcp\":{}},\"HostConfig\":{\"PortBindings\":{\"5001/tcp"
-                                     "\":[{\"HostPort\":\"5001\"}]}}}"
-                  },
-                  "type": "docker",
-                  "status": "running",
-                  "restartPolicy": "always",
-                  "version": "1.0"
-                }
-              },
-              "runtime": {
-                "settings": {
-                  "minDockerVersion": "v1.25",
-                  "registryCredentials": {
-                    str(image_name): {
-                      "address": str(acr_url),
-                      "password": str(acr_password),
-                      "username": str(acr_username)
-                    }
-                  }
-                },
-                "type": "docker"
-              },
-              "schemaVersion": "1.0",
-              "systemModules": {
-                "edgeAgent": {
-                  "settings": {
-                    "image": "mcr.microsoft.com/azureiotedge-agent:1.0",
-                    "createOptions": ""
-                  },
-                  "type": "docker"
-                },
-                "edgeHub": {
-                  "settings": {
-                    "image": "mcr.microsoft.com/azureiotedge-hub:1.0",
-                    "createOptions": "{\"HostConfig\":{\"PortBindings\":{\"443/tcp\":[{\"HostPort\":\"443\"}],\"5671/tc"
-                                     "p\":[{\"HostPort\":\"5671\"}],\"8883/tcp\":[{\"HostPort\":\"8883\"}]}}}"
-                  },
-                  "type": "docker",
-                  "status": "running",
-                  "restartPolicy": "always"
-                }
-              }
-            }
-          },
-          "$edgeHub": {
-            "properties.desired": {
-              "routes": {
-                "route": "FROM /messages/* INTO $upstream"
-              },
-              "schemaVersion": "1.0",
-              "storeAndForwardConfiguration": {
-                "timeToLiveSecs": 7200
-              }
-            }
-          }
-        }
-      },
-      "targetCondition": "*",
-      "priority": 10,
-      "labels": {},
-      "createdTimeUtc": "2019-08-08T05:52:40.134Z",
-      "lastUpdatedTimeUtc": "2019-08-08T05:52:40.134Z",
-      "etag": None,
-      "metrics": {
-        "results": {},
-        "queries": {}
-      }
-    }
+def _get_deployment_configuration(**kwargs):
+    with open('iot_hub_deployment.json') as json_file:
+        template = Template(json_file.read())
+        deployment_configuration = template.render(**kwargs)
 
-    return dict_deployment
+    return deployment_configuration
 
 
 if __name__ == '__main__':

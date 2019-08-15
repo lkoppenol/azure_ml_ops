@@ -1,0 +1,78 @@
+{
+  "id": {{image_name}},
+  "content": {
+    "modulesContent": {
+      "$edgeAgent": {
+        "properties.desired": {
+          "modules": {
+            "demoimage": {
+              "settings": {
+                "image": {{image_url}},
+                "createOptions": "{\"ExposedPorts\":{\"5001/tcp\":{}},\"HostConfig\":{\"PortBindings\":{\"5001/tcp"
+                                 "\":[{\"HostPort\":\"5001\"}]}}}"
+              },
+              "type": "docker",
+              "status": "running",
+              "restartPolicy": "always",
+              "version": "1.0"
+            }
+          },
+          "runtime": {
+            "settings": {
+              "minDockerVersion": "v1.25",
+              "registryCredentials": {
+                {{image_name}}: {
+                  "address": {{acr_url}},
+                  "password": {{acr_password}},
+                  "username": {{acr_username}}
+                }
+              }
+            },
+            "type": "docker"
+          },
+          "schemaVersion": "1.0",
+          "systemModules": {
+            "edgeAgent": {
+              "settings": {
+                "image": "mcr.microsoft.com/azureiotedge-agent:1.0",
+                "createOptions": ""
+              },
+              "type": "docker"
+            },
+            "edgeHub": {
+              "settings": {
+                "image": "mcr.microsoft.com/azureiotedge-hub:1.0",
+                "createOptions": "{\"HostConfig\":{\"PortBindings\":{\"443/tcp\":[{\"HostPort\":\"443\"}],\"5671/tc"
+                                 "p\":[{\"HostPort\":\"5671\"}],\"8883/tcp\":[{\"HostPort\":\"8883\"}]}}}"
+              },
+              "type": "docker",
+              "status": "running",
+              "restartPolicy": "always"
+            }
+          }
+        }
+      },
+      "$edgeHub": {
+        "properties.desired": {
+          "routes": {
+            "route": "FROM /messages/* INTO $upstream"
+          },
+          "schemaVersion": "1.0",
+          "storeAndForwardConfiguration": {
+            "timeToLiveSecs": 7200
+          }
+        }
+      }
+    }
+  },
+  "targetCondition": "*",
+  "priority": 10,
+  "labels": {},
+  "createdTimeUtc": "2019-08-08T05:52:40.134Z",
+  "lastUpdatedTimeUtc": "2019-08-08T05:52:40.134Z",
+  "etag": None,
+  "metrics": {
+    "results": {},
+    "queries": {}
+  }
+}
