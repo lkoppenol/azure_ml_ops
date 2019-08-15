@@ -255,7 +255,7 @@ def get_deployment_configuration(image_name, image_url, acr_url, acr_username, a
 
 
 def _get_deployment_configuration(**kwargs):
-    with open('iot_hub_deployment.json') as json_file:
+    with open('iot_hub_deployment_template.json') as json_file:
         template = Template(json_file.read())
         deployment_configuration = template.render(**kwargs)
 
