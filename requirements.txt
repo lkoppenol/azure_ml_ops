@@ -3,5 +3,5 @@ azureml-sdk==1.0.53
 azure-mgmt-containerregistry==2.8.0
 scikit-learn==0.21.3
 loguru==0.3.0
-PyYAML==5.1.1
+PyYAML==5.4
 Jinja2==2.10.1
