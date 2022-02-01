@@ -1,7 +1,7 @@
-pytest==4.3.1
-azureml-sdk==1.0.53
-azure-mgmt-containerregistry==2.8.0
-scikit-learn==0.21.3
-loguru==0.3.0
+pytest
+azureml-sdk
+azure-mgmt-containerregistry
+scikit-learn
+loguru
 PyYAML
 Jinja2
